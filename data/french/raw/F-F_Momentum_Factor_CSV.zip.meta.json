@@ -1,0 +1,15 @@
+{
+  "source": "Kenneth R. French Data Library",
+  "url": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/F-F_Momentum_Factor_CSV.zip",
+  "file": "F-F_Momentum_Factor_CSV.zip",
+  "region": "US",
+  "frequency": "monthly",
+  "retrieved_at_utc": "2026-11-24T11:50:06+00:00",
+  "sha256": "27ed60e5b2caa9ea334a261cddfa864a9926f6bf45e9677c95dfd835c5abb315",
+  "bytes": 5603,
+  "units_published": "percent",
+  "missing_codes": [
+    -99.99,
+    -999.0
+  ]
+}

@@ -1,0 +1,21 @@
+frequency: monthly
+style_factors: [size, value, momentum, low_vol, quality]
+identification: cap_weighted_sum_zero   # or "reference" (drop a reference industry)
+regression_weight: sqrt_cap             # objective weight w_i in sum w_i e_i^2 (rows scaled by sqrt(w_i))
+exposure_standardisation: cap_weighted_mean_equal_weighted_std
+factor_cov:
+  half_life_months: 18
+  min_periods: 24
+  demean: false
+  eigen_floor: 1.0e-12
+specific_risk:
+  half_life_months: 18
+  min_obs: 6
+  shrink_k: 12          # shrink weight n/(n+k) on the stock's own estimate
+  n_size_buckets: 3
+  floor_vol_monthly: 0.02
+validation:
+  n_random_portfolios: 20
+  random_seed: 7
+  rolling_window_months: 12
+  bootstrap_reps: 2000

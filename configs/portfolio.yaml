@@ -1,0 +1,25 @@
+max_weight: 0.05
+long_only: true
+full_investment: true
+turnover_one_way_max: 0.20       # sum|w - w_drift| / 2 per monthly rebalance
+initial_deployment_exempt: true  # the first rebalance from cash is not turnover-limited
+risk_aversion: 1000.0            # score-risk trade-off (scores are NOT calibrated expected returns)
+te_budget_annual: 0.04
+te_grid_annual: [0.02, 0.04, 0.06]   # predeclared grid, chosen on the validation split by IR
+active_exposure_bounds:          # bounds on active (portfolio minus benchmark) exposures
+  size: [-0.30, 0.30]
+  value: [-1.0, 1.0]
+  momentum: [-1.0, 1.0]
+  low_vol: [-1.0, 1.0]
+  quality: [-1.0, 1.0]
+industry_active_max: 0.05
+tcost_bps_penalty: 0.0           # optional linear transaction-cost penalty in the objective (bps)
+solvers: [CLARABEL, SCS]         # primary, then fallback solver on the SAME problem
+solver_tol: 1.0e-6
+constraint_check_tol: 1.0e-5
+backtest:
+  initial_cash: 10000000
+  cost_bps_one_way: 10
+  cash_buffer: 0.002
+  fractional: false
+  execution_delay: 1

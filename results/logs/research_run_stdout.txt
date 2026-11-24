@@ -1,0 +1,5 @@
+timeseries: done (1.57 s)
+custom_factors: done (16.72 s)
+fama_macbeth: done (6.15 s)
+risk_and_portfolio: done (36.07 s)
+exit 0

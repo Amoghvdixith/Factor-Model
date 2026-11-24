@@ -1,0 +1,2442 @@
+{
+  "synthetic_fast": {
+    "data_mode": "SYNTHETIC",
+    "size": "fast",
+    "finished_at_utc": "2026-11-24T12:39:16+00:00",
+    "runtime_s": 82.07,
+    "stages_run": [
+      "timeseries",
+      "custom_factors",
+      "fama_macbeth",
+      "risk_and_portfolio"
+    ],
+    "environment": {
+      "python": "3.13.12",
+      "platform": "Windows",
+      "numpy": "2.5.5",
+      "pandas": "3.1.1",
+      "scipy": "1.18.1",
+      "statsmodels": "0.15.0",
+      "matplotlib": "3.11.2",
+      "cvxpy": "1.9.3",
+      "clarabel": "0.11.1",
+      "scs": "3.3.2",
+      "linearmodels": "7.1",
+      "yfinance": "1.8.0",
+      "backtester": "0.1.0",
+      "factors": "0.1.0"
+    },
+    "configs": {
+      "data": {
+        "synthetic": {
+          "seed": 20240607,
+          "sizes": {
+            "fast": {
+              "n_stocks": 120,
+              "n_years": 10,
+              "start": "2012-01-02"
+            },
+            "research": {
+              "n_stocks": 400,
+              "n_years": 20,
+              "start": "2002-01-01"
+            }
+          },
+          "n_industries": 8,
+          "delisting_prob_per_year": 0.01,
+          "delisting_return_range": [
+            -0.5,
+            -0.1
+          ],
+          "late_listing_fraction": 0.1,
+          "revision_prob": 0.15,
+          "publication_lag_days": [
+            60,
+            120
+          ],
+          "directory": "data/synthetic"
+        },
+        "french": {
+          "base_url": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/",
+          "region": "US",
+          "frequency": "monthly",
+          "files": {
+            "ff3": "F-F_Research_Data_Factors_CSV.zip",
+            "ff5": "F-F_Research_Data_5_Factors_2x3_CSV.zip",
+            "mom": "F-F_Momentum_Factor_CSV.zip",
+            "p25": "25_Portfolios_5x5_CSV.zip"
+          },
+          "directory": "data/french"
+        },
+        "market": {
+          "directory": "data/market",
+          "etfs": {
+            "SPY": "S&P 500 (market)",
+            "IWD": "Russell 1000 Value",
+            "IWN": "Russell 2000 Value",
+            "MTUM": "MSCI USA Momentum",
+            "QUAL": "MSCI USA Quality",
+            "USMV": "MSCI USA Min Volatility"
+          },
+          "etf_start": "2000-01-01",
+          "stock_universe_file": "configs/real_universe.csv",
+          "stock_start": "2010-01-01"
+        },
+        "splits": {
+          "train": 0.45,
+          "validation": 0.2,
+          "oos": 0.2,
+          "holdout": 0.15
+        }
+      },
+      "timeseries": {
+        "models": {
+          "CAPM": [
+            "MKT_RF"
+          ],
+          "FF3": [
+            "MKT_RF",
+            "SMB",
+            "HML"
+          ],
+          "Carhart4": [
+            "MKT_RF",
+            "SMB",
+            "HML",
+            "MOM"
+          ],
+          "FF5": [
+            "MKT_RF",
+            "SMB",
+            "HML",
+            "RMW",
+            "CMA"
+          ],
+          "FF5_plus_MOM": [
+            "MKT_RF",
+            "SMB",
+            "HML",
+            "RMW",
+            "CMA",
+            "MOM"
+          ]
+        },
+        "hac_lags": "auto",
+        "hac_small_sample_correction": true,
+        "rolling_window": 36,
+        "rolling_min_obs": 36,
+        "grs_models": [
+          "CAPM",
+          "FF3",
+          "Carhart4",
+          "FF5"
+        ],
+        "grs_condition_number_max": 10000000000.0
+      },
+      "characteristics": {
+        "momentum": {
+          "lookback_months": 12,
+          "skip_months": 1,
+          "min_months": 12
+        },
+        "low_vol": {
+          "lookback_days": 252,
+          "min_obs": 126
+        },
+        "value": {
+          "measure": "book_to_market"
+        },
+        "quality": {
+          "components": [
+            "roe",
+            "gpa",
+            "neg_leverage"
+          ],
+          "min_components": 2
+        },
+        "processing": {
+          "winsor_lower": 0.01,
+          "winsor_upper": 0.99,
+          "min_cross_section": 20,
+          "sector_relative": false
+        },
+        "sorts": {
+          "n_groups": 5,
+          "min_stocks": 25
+        },
+        "composite_weights": {
+          "value": 1.0,
+          "momentum": 1.0,
+          "low_vol": 1.0,
+          "quality": 1.0
+        },
+        "fama_macbeth": {
+          "specs": {
+            "uni_value": [
+              "value"
+            ],
+            "uni_momentum": [
+              "momentum"
+            ],
+            "uni_low_vol": [
+              "low_vol"
+            ],
+            "uni_quality": [
+              "quality"
+            ],
+            "multi": [
+              "value",
+              "momentum",
+              "low_vol",
+              "quality"
+            ],
+            "multi_size": [
+              "value",
+              "momentum",
+              "low_vol",
+              "quality",
+              "size"
+            ]
+          },
+          "industry_controls": [
+            false,
+            true
+          ],
+          "hac_lags": "auto",
+          "min_obs_per_month": 30,
+          "t_hurdle": 3.0,
+          "return_convention": "excess"
+        }
+      },
+      "risk_model": {
+        "frequency": "monthly",
+        "style_factors": [
+          "size",
+          "value",
+          "momentum",
+          "low_vol",
+          "quality"
+        ],
+        "identification": "cap_weighted_sum_zero",
+        "regression_weight": "sqrt_cap",
+        "exposure_standardisation": "cap_weighted_mean_equal_weighted_std",
+        "factor_cov": {
+          "half_life_months": 18,
+          "min_periods": 24,
+          "demean": false,
+          "eigen_floor": 1e-12
+        },
+        "specific_risk": {
+          "half_life_months": 18,
+          "min_obs": 6,
+          "shrink_k": 12,
+          "n_size_buckets": 3,
+          "floor_vol_monthly": 0.02
+        },
+        "validation": {
+          "n_random_portfolios": 20,
+          "random_seed": 7,
+          "rolling_window_months": 12,
+          "bootstrap_reps": 2000
+        }
+      },
+      "portfolio": {
+        "max_weight": 0.05,
+        "long_only": true,
+        "full_investment": true,
+        "turnover_one_way_max": 0.2,
+        "initial_deployment_exempt": true,
+        "risk_aversion": 1000.0,
+        "te_budget_annual": 0.04,
+        "te_grid_annual": [
+          0.02,
+          0.04,
+          0.06
+        ],
+        "active_exposure_bounds": {
+          "size": [
+            -0.3,
+            0.3
+          ],
+          "value": [
+            -1.0,
+            1.0
+          ],
+          "momentum": [
+            -1.0,
+            1.0
+          ],
+          "low_vol": [
+            -1.0,
+            1.0
+          ],
+          "quality": [
+            -1.0,
+            1.0
+          ]
+        },
+        "industry_active_max": 0.05,
+        "tcost_bps_penalty": 0.0,
+        "solvers": [
+          "CLARABEL",
+          "SCS"
+        ],
+        "solver_tol": 1e-06,
+        "constraint_check_tol": 1e-05,
+        "backtest": {
+          "initial_cash": 10000000,
+          "cost_bps_one_way": 10,
+          "cash_buffer": 0.002,
+          "fractional": false,
+          "execution_delay": 1
+        }
+      }
+    },
+    "seeds": {
+      "synthetic": 20240607,
+      "random_portfolios": 7
+    },
+    "synthetic_provenance": {
+      "data_mode": "SYNTHETIC",
+      "warning": "Synthetic data generated by factors.synthetic. Not real market data.",
+      "spec": {
+        "n_stocks": 120,
+        "n_years": 10,
+        "start": "2012-01-02",
+        "n_industries": 8,
+        "seed": 20240607,
+        "delisting_prob_per_year": 0.01,
+        "delisting_return_range": [
+          -0.5,
+          -0.1
+        ],
+        "late_listing_fraction": 0.1,
+        "revision_prob": 0.15,
+        "publication_lag_days": [
+          60,
+          120
+        ],
+        "academic_months": 360,
+        "rf_annual": 0.02,
+        "style_premia_monthly": {
+          "size": -0.001,
+          "value": 0.003,
+          "quality": 0.002,
+          "momentum": 0.0025
+        },
+        "style_vol_annual": {
+          "size": 0.05,
+          "value": 0.06,
+          "quality": 0.04,
+          "momentum": 0.07
+        }
+      },
+      "n_price_rows": 283614,
+      "n_fundamental_rows": 1553,
+      "n_restatements": 202,
+      "n_delisted": 13,
+      "n_late_listed": 8,
+      "units": "decimal returns; prices in synthetic USD",
+      "academic_true_model": "25 portfolios: FF5 with zero alpha; funds: see fund_truth",
+      "fund_truth": {
+        "VALUE_FUND": {
+          "alpha_monthly": 0.0,
+          "MKT_RF": 1.0,
+          "HML": 0.4
+        },
+        "SMALL_FUND": {
+          "alpha_monthly": 0.0,
+          "MKT_RF": 1.05,
+          "SMB": 0.8
+        },
+        "MOMENTUM_FUND": {
+          "alpha_monthly": 0.0,
+          "MKT_RF": 1.0,
+          "MOM": 0.5
+        },
+        "QUALITY_FUND": {
+          "alpha_monthly": 0.0,
+          "MKT_RF": 0.9,
+          "RMW": 0.4,
+          "CMA": 0.2
+        },
+        "MARKET_FUND": {
+          "alpha_monthly": 0.0,
+          "MKT_RF": 1.0
+        },
+        "ACTIVE_FUND": {
+          "alpha_monthly": 0.0015,
+          "MKT_RF": 0.95,
+          "SMB": 0.2,
+          "HML": 0.2
+        }
+      },
+      "factor_mean_true_monthly": {
+        "MKT_RF": 0.006,
+        "SMB": 0.002,
+        "HML": 0.003,
+        "RMW": 0.003,
+        "CMA": 0.003,
+        "MOM": 0.006
+      },
+      "stock_style_premia_monthly_true": {
+        "size": -0.001,
+        "value": 0.003,
+        "quality": 0.002,
+        "momentum": 0.0025
+      }
+    },
+    "stages": {
+      "timeseries": {
+        "runtime_s": 1.58,
+        "n_regressions": 30,
+        "grs": [
+          {
+            "model": "CAPM",
+            "statistic": 1.5450481907894205,
+            "pvalue": 0.04848961979540747,
+            "df1": 25,
+            "df2": 334,
+            "T": 360,
+            "N": 25,
+            "L": 1,
+            "alpha_quadratic": 0.11683273725356177,
+            "sharpe_factor_sq": 0.010250281520392642,
+            "cond_residual_cov": 234.7927136507228,
+            "cond_factor_cov": 1.0,
+            "sample_start": "1996-01",
+            "sample_end": "2025-12",
+            "mean_abs_alpha": 0.004509407805712967,
+            "assumptions": "Classical GRS (1989): i.i.d. multivariate-normal residuals, factors are traded excess returns, MLE covariances (divisor T) for residuals and factors, F(N, T-N-L). Not robust to heteroskedasticity/autocorrelation; not the HAC inference."
+          },
+          {
+            "model": "FF3",
+            "statistic": 1.2201579421815827,
+            "pvalue": 0.21762869308573796,
+            "df1": 25,
+            "df2": 332,
+            "T": 360,
+            "N": 25,
+            "L": 3,
+            "alpha_quadratic": 0.09554075420887748,
+            "sharpe_factor_sq": 0.03984998337622943,
+            "cond_residual_cov": 24.818193683569103,
+            "cond_factor_cov": 2.702072047323832,
+            "sample_start": "1996-01",
+            "sample_end": "2025-12",
+            "mean_abs_alpha": 0.0013003839238254163,
+            "assumptions": "Classical GRS (1989): i.i.d. multivariate-normal residuals, factors are traded excess returns, MLE covariances (divisor T) for residuals and factors, F(N, T-N-L). Not robust to heteroskedasticity/autocorrelation; not the HAC inference."
+          },
+          {
+            "model": "Carhart4",
+            "statistic": 1.0929230574447202,
+            "pvalue": 0.34823853332140337,
+            "df1": 25,
+            "df2": 331,
+            "T": 360,
+            "N": 25,
+            "L": 4,
+            "alpha_quadratic": 0.08891656813624724,
+            "sharpe_factor_sq": 0.07716216078043432,
+            "cond_residual_cov": 24.603986294939958,
+            "cond_factor_cov": 2.8663040692207002,
+            "sample_start": "1996-01",
+            "sample_end": "2025-12",
+            "mean_abs_alpha": 0.001165312681515432,
+            "assumptions": "Classical GRS (1989): i.i.d. multivariate-normal residuals, factors are traded excess returns, MLE covariances (divisor T) for residuals and factors, F(N, T-N-L). Not robust to heteroskedasticity/autocorrelation; not the HAC inference."
+          },
+          {
+            "model": "FF5",
+            "statistic": 0.8864196894124119,
+            "pvalue": 0.6249471924490648,
+            "df1": 25,
+            "df2": 330,
+            "T": 360,
+            "N": 25,
+            "L": 5,
+            "alpha_quadratic": 0.07252218731822072,
+            "sharpe_factor_sq": 0.07995443245973244,
+            "cond_residual_cov": 5.440898110961469,
+            "cond_factor_cov": 10.530358240765947,
+            "sample_start": "1996-01",
+            "sample_end": "2025-12",
+            "mean_abs_alpha": 0.000607911191248927,
+            "assumptions": "Classical GRS (1989): i.i.d. multivariate-normal residuals, factors are traded excess returns, MLE covariances (divisor T) for residuals and factors, F(N, T-N-L). Not robust to heteroskedasticity/autocorrelation; not the HAC inference."
+          }
+        ],
+        "assets_sample": "1996-01 to 2025-12",
+        "grs_sample": "1996-01 to 2025-12",
+        "source": "synthetic academic factors (true model for the 25 portfolios: FF5, zero alpha)"
+      },
+      "custom_factors": {
+        "runtime_s": 8.44,
+        "characteristics": [
+          "value",
+          "momentum",
+          "low_vol",
+          "quality"
+        ],
+        "unavailable": {},
+        "weightings": [
+          "ew",
+          "vw"
+        ],
+        "n_panel_rows": 11216,
+        "tearsheet": [
+          {
+            "signal": "value",
+            "weighting": "ew",
+            "n_months": 98,
+            "start": "2012-02-29 00:00:00",
+            "end": "2020-03-31 00:00:00",
+            "mean_monthly": 0.0017632781328517175,
+            "ann_mean": 0.02115933759422061,
+            "ann_vol": 0.17693775210129847,
+            "sharpe_ann": 0.11958633668018284,
+            "t_mean_hac": 0.3968080561600716,
+            "hac_lags": 3,
+            "max_drawdown": -0.48609189127087216,
+            "hit_rate": 0.46938775510204084,
+            "avg_turnover_Q1": 0.13491437798804087,
+            "avg_turnover_Q5": 0.15432499819739587,
+            "n_log_events": 5
+          },
+          {
+            "signal": "value",
+            "weighting": "vw",
+            "n_months": 98,
+            "start": "2012-02-29 00:00:00",
+            "end": "2020-03-31 00:00:00",
+            "mean_monthly": 0.0007678967569787008,
+            "ann_mean": 0.009214761083744409,
+            "ann_vol": 0.19293207817897945,
+            "sharpe_ann": 0.04776168468571643,
+            "t_mean_hac": 0.15196551437315708,
+            "hac_lags": 3,
+            "max_drawdown": -0.5240630376383995,
+            "hit_rate": 0.5102040816326531,
+            "avg_turnover_Q1": 0.13754855312385036,
+            "avg_turnover_Q5": 0.1623942117205253,
+            "n_log_events": 5
+          },
+          {
+            "signal": "momentum",
+            "weighting": "ew",
+            "n_months": 86,
+            "start": "2013-02-28 00:00:00",
+            "end": "2020-03-31 00:00:00",
+            "mean_monthly": 0.004196221075136956,
+            "ann_mean": 0.05035465290164347,
+            "ann_vol": 0.2444254100166988,
+            "sharpe_ann": 0.2060123491178896,
+            "t_mean_hac": 0.5852549589582056,
+            "hac_lags": 3,
+            "max_drawdown": -0.4729601296057966,
+            "hit_rate": 0.5813953488372093,
+            "avg_turnover_Q1": 0.2694950232199319,
+            "avg_turnover_Q5": 0.27555208401686965,
+            "n_log_events": 17
+          },
+          {
+            "signal": "momentum",
+            "weighting": "vw",
+            "n_months": 86,
+            "start": "2013-02-28 00:00:00",
+            "end": "2020-03-31 00:00:00",
+            "mean_monthly": 0.004644707940589433,
+            "ann_mean": 0.055736495287073196,
+            "ann_vol": 0.2625684278467388,
+            "sharpe_ann": 0.21227417075295354,
+            "t_mean_hac": 0.5495782612242671,
+            "hac_lags": 3,
+            "max_drawdown": -0.6124638196565872,
+            "hit_rate": 0.5,
+            "avg_turnover_Q1": 0.32594893171664124,
+            "avg_turnover_Q5": 0.2885590419165223,
+            "n_log_events": 17
+          },
+          {
+            "signal": "low_vol",
+            "weighting": "ew",
+            "n_months": 93,
+            "start": "2012-07-31 00:00:00",
+            "end": "2020-03-31 00:00:00",
+            "mean_monthly": -7.3100795140326715e-06,
+            "ann_mean": -8.772095416839206e-05,
+            "ann_vol": 0.09998423989676924,
+            "sharpe_ann": -0.0008773478126048799,
+            "t_mean_hac": -0.002832623976618741,
+            "hac_lags": 3,
+            "max_drawdown": -0.18438620980564113,
+            "hit_rate": 0.4946236559139785,
+            "avg_turnover_Q1": 0.085838351848078,
+            "avg_turnover_Q5": 0.07280393314632594,
+            "n_log_events": 10
+          },
+          {
+            "signal": "low_vol",
+            "weighting": "vw",
+            "n_months": 93,
+            "start": "2012-07-31 00:00:00",
+            "end": "2020-03-31 00:00:00",
+            "mean_monthly": 0.0046945225534911076,
+            "ann_mean": 0.056334270641893294,
+            "ann_vol": 0.13818723586510867,
+            "sharpe_ann": 0.4076662384135386,
+            "t_mean_hac": 0.9886907657589363,
+            "hac_lags": 3,
+            "max_drawdown": -0.29622891851032207,
+            "hit_rate": 0.5913978494623656,
+            "avg_turnover_Q1": 0.11129703087538254,
+            "avg_turnover_Q5": 0.08364125695130611,
+            "n_log_events": 10
+          },
+          {
+            "signal": "quality",
+            "weighting": "ew",
+            "n_months": 98,
+            "start": "2012-02-29 00:00:00",
+            "end": "2020-03-31 00:00:00",
+            "mean_monthly": 0.006078739742123722,
+            "ann_mean": 0.07294487690548467,
+            "ann_vol": 0.13737879217435178,
+            "sharpe_ann": 0.5309762573316849,
+            "t_mean_hac": 1.4143036876766855,
+            "hac_lags": 3,
+            "max_drawdown": -0.2800004620070399,
+            "hit_rate": 0.5408163265306123,
+            "avg_turnover_Q1": 0.08280040459249534,
+            "avg_turnover_Q5": 0.08314069785829208,
+            "n_log_events": 5
+          },
+          {
+            "signal": "quality",
+            "weighting": "vw",
+            "n_months": 98,
+            "start": "2012-02-29 00:00:00",
+            "end": "2020-03-31 00:00:00",
+            "mean_monthly": 0.004451187152655065,
+            "ann_mean": 0.05341424583186079,
+            "ann_vol": 0.16831424174968448,
+            "sharpe_ann": 0.31734834364936265,
+            "t_mean_hac": 0.7791172245019525,
+            "hac_lags": 3,
+            "max_drawdown": -0.4471288337224001,
+            "hit_rate": 0.5306122448979592,
+            "avg_turnover_Q1": 0.06260877002233767,
+            "avg_turnover_Q5": 0.06949851653933732,
+            "n_log_events": 5
+          }
+        ],
+        "comparison": [
+          {
+            "custom": "value_ew",
+            "reference": "value",
+            "reference_source": "TRUE synthetic style factor returns",
+            "n_months": 98,
+            "correlation": 0.7250159263269356,
+            "start": "2012-02-29",
+            "end": "2020-03-31"
+          },
+          {
+            "custom": "momentum_ew",
+            "reference": "momentum",
+            "reference_source": "TRUE synthetic style factor returns",
+            "n_months": 86,
+            "correlation": 0.8641768792169638,
+            "start": "2013-02-28",
+            "end": "2020-03-31"
+          },
+          {
+            "custom": "quality_ew",
+            "reference": "quality",
+            "reference_source": "TRUE synthetic style factor returns",
+            "n_months": 98,
+            "correlation": 0.7143156250897766,
+            "start": "2012-02-29",
+            "end": "2020-03-31"
+          }
+        ]
+      },
+      "fama_macbeth": {
+        "runtime_s": 8.81,
+        "y": "ret_fwd_excess",
+        "n_specs_run": 12,
+        "linearmodels_check": {
+          "max_abs_param_diff": 8.673617379884035e-18,
+          "max_abs_se_kernel_vs_own_hac_diff": 4.336808689942018e-18,
+          "max_abs_se_unadj_diff": 1.5178830414797062e-18
+        }
+      },
+      "risk_and_portfolio": {
+        "runtime_s": 63.13,
+        "identification": "cap_weighted_sum_zero",
+        "n_risk_model_dates": 63,
+        "factor_return_r2_mean": 0.30369803845701254,
+        "te_selected_annual": 0.02,
+        "te_selection": [
+          {
+            "te_annual": 0.02,
+            "validation_ir_net_model": -0.7455966249802443,
+            "n_months": 23,
+            "n_fallbacks": 0
+          },
+          {
+            "te_annual": 0.04,
+            "validation_ir_net_model": -0.7558480960761275,
+            "n_months": 23,
+            "n_fallbacks": 0
+          },
+          {
+            "te_annual": 0.06,
+            "validation_ir_net_model": -0.898523828055346,
+            "n_months": 23,
+            "n_fallbacks": 0
+          }
+        ],
+        "solver_status_counts": {
+          "optimal": 47
+        },
+        "solvers_used": {
+          "CLARABEL": 47
+        },
+        "fallbacks": 0,
+        "post_solve_violations": 0,
+        "bias_all": [
+          {
+            "group": "equal_weight",
+            "period": "all",
+            "n": 62,
+            "bias": 1.0880055168991474,
+            "ci_low": 0.9256649086252,
+            "ci_high": 1.3199329547332812,
+            "demeaned": false,
+            "mean_z": 0.11183395090367171,
+            "boot_ci_low": 0.9362755986219009,
+            "boot_ci_high": 1.2376501145218908
+          },
+          {
+            "group": "optimised",
+            "period": "all",
+            "n": 46,
+            "bias": 1.087785747977561,
+            "ci_low": 0.9039226749551313,
+            "ci_high": 1.3662435283587937,
+            "demeaned": false,
+            "mean_z": 0.08099738761816173,
+            "boot_ci_low": 0.909263565951535,
+            "boot_ci_high": 1.2745879099323565
+          },
+          {
+            "group": "random (20)",
+            "period": "all",
+            "n": 1240,
+            "bias": 1.0952454428887015,
+            "ci_low": 1.0537880201390746,
+            "ci_high": 1.140123451418833,
+            "demeaned": false,
+            "mean_z": 0.11024569058444127,
+            "boot_ci_low": NaN,
+            "boot_ci_high": NaN
+          },
+          {
+            "group": "simple_tilt",
+            "period": "all",
+            "n": 46,
+            "bias": 1.049958927030426,
+            "ci_low": 0.8724895354429114,
+            "ci_high": 1.3187335757661107,
+            "demeaned": false,
+            "mean_z": 0.06806752128098538,
+            "boot_ci_low": 0.8602889947653384,
+            "boot_ci_high": 1.2367271385481267
+          }
+        ],
+        "tearsheet_oos": [
+          {
+            "strategy": "ew",
+            "period": "oos",
+            "n_days": 522,
+            "start": "2018-04-02",
+            "end": "2020-03-31",
+            "ann_return": 0.08349811279597086,
+            "ann_vol": 0.1968481860414517,
+            "max_drawdown": -0.20518827472848733,
+            "return_over_vol": 0.424175170089645,
+            "cost_commissions": 36979.03400823202,
+            "cost_spread_costs": 0.0,
+            "cost_slippage_costs": 0.0,
+            "cost_impact_costs": 0.0,
+            "cost_interest": 0.0,
+            "cost_borrow_fees": 0.0,
+            "cost_traded_notional": 36979034.008232094,
+            "cost_total_trading_costs": 36979.03400823202,
+            "cost_net_financing": 0.0,
+            "tracking_error": NaN,
+            "info_ratio": NaN
+          },
+          {
+            "strategy": "tilt",
+            "period": "oos",
+            "n_days": 522,
+            "start": "2018-04-02",
+            "end": "2020-03-31",
+            "ann_return": 0.1373957091784923,
+            "ann_vol": 0.2135945127868878,
+            "max_drawdown": -0.21558521517519535,
+            "return_over_vol": 0.6432548635534368,
+            "cost_commissions": 188796.27199089405,
+            "cost_spread_costs": 0.0,
+            "cost_slippage_costs": 0.0,
+            "cost_impact_costs": 0.0,
+            "cost_interest": 0.0,
+            "cost_borrow_fees": 0.0,
+            "cost_traded_notional": 188796271.99089405,
+            "cost_total_trading_costs": 188796.27199089405,
+            "cost_net_financing": 0.0,
+            "tracking_error": 0.0844913288132491,
+            "info_ratio": 0.6152884523625167
+          },
+          {
+            "strategy": "opt",
+            "period": "oos",
+            "n_days": 522,
+            "start": "2018-04-02",
+            "end": "2020-03-31",
+            "ann_return": 0.09895593486660625,
+            "ann_vol": 0.1935722003889887,
+            "max_drawdown": -0.21405368382068113,
+            "return_over_vol": 0.511209433316104,
+            "cost_commissions": 62571.59074269097,
+            "cost_spread_costs": 0.0,
+            "cost_slippage_costs": 0.0,
+            "cost_impact_costs": 0.0,
+            "cost_interest": 0.0,
+            "cost_borrow_fees": 0.0,
+            "cost_traded_notional": 62571590.74269095,
+            "cost_total_trading_costs": 62571.59074269097,
+            "cost_net_financing": 0.0,
+            "tracking_error": 0.019729518160249294,
+            "info_ratio": 0.6859415676793162
+          }
+        ],
+        "backtester_version": "0.1.0",
+        "attribution_date": "2020-03-31",
+        "total_sigma_annual": 0.1735093849077104,
+        "factor_share_of_sigma": 0.9752022267152954,
+        "active_te_annual": 0.02000000000216502,
+        "target_vs_realised_mean_sum_abs_diff": 0.04517006797314123,
+        "mean_residual_cash": 0.0004891987512218841,
+        "final_untradeable_weight": 0.041672880055972895
+      }
+    },
+    "splits": {
+      "train": [
+        "2012-01",
+        "2016-04"
+      ],
+      "validation": [
+        "2016-05",
+        "2018-03"
+      ],
+      "oos": [
+        "2018-04",
+        "2020-03"
+      ],
+      "holdout": [
+        "2020-04",
+        "2021-08"
+      ]
+    },
+    "holdout": {
+      "start": "2020-04",
+      "end": "2021-08",
+      "consumed_by_run_all": false
+    }
+  },
+  "real": {
+    "data_mode": "REAL",
+    "size": "fast",
+    "finished_at_utc": "2026-11-24T12:31:46+00:00",
+    "runtime_s": 7.59,
+    "stages_run": [
+      "timeseries",
+      "custom_factors",
+      "fama_macbeth",
+      "risk_and_portfolio"
+    ],
+    "environment": {
+      "python": "3.13.12",
+      "platform": "Windows",
+      "numpy": "2.5.5",
+      "pandas": "3.1.1",
+      "scipy": "1.18.1",
+      "statsmodels": "0.15.0",
+      "matplotlib": "3.11.2",
+      "cvxpy": "1.9.3",
+      "clarabel": "0.11.1",
+      "scs": "3.3.2",
+      "linearmodels": "7.1",
+      "yfinance": "1.8.0",
+      "backtester": "0.1.0",
+      "factors": "0.1.0"
+    },
+    "configs": {
+      "data": {
+        "synthetic": {
+          "seed": 20240607,
+          "sizes": {
+            "fast": {
+              "n_stocks": 120,
+              "n_years": 10,
+              "start": "2012-01-02"
+            },
+            "research": {
+              "n_stocks": 400,
+              "n_years": 20,
+              "start": "2002-01-01"
+            }
+          },
+          "n_industries": 8,
+          "delisting_prob_per_year": 0.01,
+          "delisting_return_range": [
+            -0.5,
+            -0.1
+          ],
+          "late_listing_fraction": 0.1,
+          "revision_prob": 0.15,
+          "publication_lag_days": [
+            60,
+            120
+          ],
+          "directory": "data/synthetic"
+        },
+        "french": {
+          "base_url": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/",
+          "region": "US",
+          "frequency": "monthly",
+          "files": {
+            "ff3": "F-F_Research_Data_Factors_CSV.zip",
+            "ff5": "F-F_Research_Data_5_Factors_2x3_CSV.zip",
+            "mom": "F-F_Momentum_Factor_CSV.zip",
+            "p25": "25_Portfolios_5x5_CSV.zip"
+          },
+          "directory": "data/french"
+        },
+        "market": {
+          "directory": "data/market",
+          "etfs": {
+            "SPY": "S&P 500 (market)",
+            "IWD": "Russell 1000 Value",
+            "IWN": "Russell 2000 Value",
+            "MTUM": "MSCI USA Momentum",
+            "QUAL": "MSCI USA Quality",
+            "USMV": "MSCI USA Min Volatility"
+          },
+          "etf_start": "2000-01-01",
+          "stock_universe_file": "configs/real_universe.csv",
+          "stock_start": "2010-01-01"
+        },
+        "splits": {
+          "train": 0.45,
+          "validation": 0.2,
+          "oos": 0.2,
+          "holdout": 0.15
+        }
+      },
+      "timeseries": {
+        "models": {
+          "CAPM": [
+            "MKT_RF"
+          ],
+          "FF3": [
+            "MKT_RF",
+            "SMB",
+            "HML"
+          ],
+          "Carhart4": [
+            "MKT_RF",
+            "SMB",
+            "HML",
+            "MOM"
+          ],
+          "FF5": [
+            "MKT_RF",
+            "SMB",
+            "HML",
+            "RMW",
+            "CMA"
+          ],
+          "FF5_plus_MOM": [
+            "MKT_RF",
+            "SMB",
+            "HML",
+            "RMW",
+            "CMA",
+            "MOM"
+          ]
+        },
+        "hac_lags": "auto",
+        "hac_small_sample_correction": true,
+        "rolling_window": 36,
+        "rolling_min_obs": 36,
+        "grs_models": [
+          "CAPM",
+          "FF3",
+          "Carhart4",
+          "FF5"
+        ],
+        "grs_condition_number_max": 10000000000.0
+      },
+      "characteristics": {
+        "momentum": {
+          "lookback_months": 12,
+          "skip_months": 1,
+          "min_months": 12
+        },
+        "low_vol": {
+          "lookback_days": 252,
+          "min_obs": 126
+        },
+        "value": {
+          "measure": "book_to_market"
+        },
+        "quality": {
+          "components": [
+            "roe",
+            "gpa",
+            "neg_leverage"
+          ],
+          "min_components": 2
+        },
+        "processing": {
+          "winsor_lower": 0.01,
+          "winsor_upper": 0.99,
+          "min_cross_section": 20,
+          "sector_relative": false
+        },
+        "sorts": {
+          "n_groups": 5,
+          "min_stocks": 25
+        },
+        "composite_weights": {
+          "value": 1.0,
+          "momentum": 1.0,
+          "low_vol": 1.0,
+          "quality": 1.0
+        },
+        "fama_macbeth": {
+          "specs": {
+            "uni_value": [
+              "value"
+            ],
+            "uni_momentum": [
+              "momentum"
+            ],
+            "uni_low_vol": [
+              "low_vol"
+            ],
+            "uni_quality": [
+              "quality"
+            ],
+            "multi": [
+              "value",
+              "momentum",
+              "low_vol",
+              "quality"
+            ],
+            "multi_size": [
+              "value",
+              "momentum",
+              "low_vol",
+              "quality",
+              "size"
+            ]
+          },
+          "industry_controls": [
+            false,
+            true
+          ],
+          "hac_lags": "auto",
+          "min_obs_per_month": 30,
+          "t_hurdle": 3.0,
+          "return_convention": "excess"
+        }
+      },
+      "risk_model": {
+        "frequency": "monthly",
+        "style_factors": [
+          "size",
+          "value",
+          "momentum",
+          "low_vol",
+          "quality"
+        ],
+        "identification": "cap_weighted_sum_zero",
+        "regression_weight": "sqrt_cap",
+        "exposure_standardisation": "cap_weighted_mean_equal_weighted_std",
+        "factor_cov": {
+          "half_life_months": 18,
+          "min_periods": 24,
+          "demean": false,
+          "eigen_floor": 1e-12
+        },
+        "specific_risk": {
+          "half_life_months": 18,
+          "min_obs": 6,
+          "shrink_k": 12,
+          "n_size_buckets": 3,
+          "floor_vol_monthly": 0.02
+        },
+        "validation": {
+          "n_random_portfolios": 20,
+          "random_seed": 7,
+          "rolling_window_months": 12,
+          "bootstrap_reps": 2000
+        }
+      },
+      "portfolio": {
+        "max_weight": 0.05,
+        "long_only": true,
+        "full_investment": true,
+        "turnover_one_way_max": 0.2,
+        "initial_deployment_exempt": true,
+        "risk_aversion": 1000.0,
+        "te_budget_annual": 0.04,
+        "te_grid_annual": [
+          0.02,
+          0.04,
+          0.06
+        ],
+        "active_exposure_bounds": {
+          "size": [
+            -0.3,
+            0.3
+          ],
+          "value": [
+            -1.0,
+            1.0
+          ],
+          "momentum": [
+            -1.0,
+            1.0
+          ],
+          "low_vol": [
+            -1.0,
+            1.0
+          ],
+          "quality": [
+            -1.0,
+            1.0
+          ]
+        },
+        "industry_active_max": 0.05,
+        "tcost_bps_penalty": 0.0,
+        "solvers": [
+          "CLARABEL",
+          "SCS"
+        ],
+        "solver_tol": 1e-06,
+        "constraint_check_tol": 1e-05,
+        "backtest": {
+          "initial_cash": 10000000,
+          "cost_bps_one_way": 10,
+          "cash_buffer": 0.002,
+          "fractional": false,
+          "execution_delay": 1
+        }
+      }
+    },
+    "seeds": {
+      "synthetic": 20240607,
+      "random_portfolios": 7
+    },
+    "synthetic_provenance": null,
+    "french_provenance": {
+      "ff3": {
+        "source": "Kenneth R. French Data Library",
+        "url": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/F-F_Research_Data_Factors_CSV.zip",
+        "file": "F-F_Research_Data_Factors_CSV.zip",
+        "region": "US",
+        "frequency": "monthly",
+        "retrieved_at_utc": "2026-11-24T11:50:06+00:00",
+        "sha256": "b03d39e4bb253dda0f14893db3b78e64b40b8d6549a0fc0fd4111dae84c98618",
+        "bytes": 13078,
+        "units_published": "percent",
+        "missing_codes": [
+          -99.99,
+          -999.0
+        ]
+      },
+      "ff5": {
+        "source": "Kenneth R. French Data Library",
+        "url": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/F-F_Research_Data_5_Factors_2x3_CSV.zip",
+        "file": "F-F_Research_Data_5_Factors_2x3_CSV.zip",
+        "region": "US",
+        "frequency": "monthly",
+        "retrieved_at_utc": "2026-11-24T11:50:06+00:00",
+        "sha256": "17d7a575e71d6764a70ddec3f8d887756c0eebf3a60f64d6ba95d2adde3fed26",
+        "bytes": 11971,
+        "units_published": "percent",
+        "missing_codes": [
+          -99.99,
+          -999.0
+        ]
+      },
+      "mom": {
+        "source": "Kenneth R. French Data Library",
+        "url": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/F-F_Momentum_Factor_CSV.zip",
+        "file": "F-F_Momentum_Factor_CSV.zip",
+        "region": "US",
+        "frequency": "monthly",
+        "retrieved_at_utc": "2026-11-24T11:50:06+00:00",
+        "sha256": "27ed60e5b2caa9ea334a261cddfa864a9926f6bf45e9677c95dfd835c5abb315",
+        "bytes": 5603,
+        "units_published": "percent",
+        "missing_codes": [
+          -99.99,
+          -999.0
+        ]
+      },
+      "p25": {
+        "source": "Kenneth R. French Data Library",
+        "url": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/25_Portfolios_5x5_CSV.zip",
+        "file": "25_Portfolios_5x5_CSV.zip",
+        "region": "US",
+        "frequency": "monthly",
+        "retrieved_at_utc": "2026-11-24T11:50:07+00:00",
+        "sha256": "ec3a80f94edf98b730790e4fff4f30ed5f0a00494a665c20e15665f580e41557",
+        "bytes": 549163,
+        "units_published": "percent",
+        "missing_codes": [
+          -99.99,
+          -999.0
+        ]
+      }
+    },
+    "french_coverage": {
+      "ff3": [
+        "1926-07",
+        "2026-09"
+      ],
+      "ff5": [
+        "1963-07",
+        "2026-09"
+      ],
+      "mom": [
+        "1927-01",
+        "2026-09"
+      ],
+      "p25": [
+        "1926-07",
+        "2026-09"
+      ]
+    },
+    "stages": {
+      "timeseries": {
+        "runtime_s": 1.56,
+        "n_regressions": 30,
+        "grs": [
+          {
+            "model": "CAPM",
+            "statistic": 4.167417231052135,
+            "pvalue": 9.523011233790773e-11,
+            "df1": 25,
+            "df2": 733,
+            "T": 759,
+            "N": 25,
+            "L": 1,
+            "alpha_quadratic": 0.1447123012137363,
+            "sharpe_factor_sq": 0.01812812021116993,
+            "cond_residual_cov": 160.9013250335332,
+            "cond_factor_cov": 1.0,
+            "sample_start": "1963-07",
+            "sample_end": "2026-09",
+            "mean_abs_alpha": 0.001929231597291358,
+            "assumptions": "Classical GRS (1989): i.i.d. multivariate-normal residuals, factors are traded excess returns, MLE covariances (divisor T) for residuals and factors, F(N, T-N-L). Not robust to heteroskedasticity/autocorrelation; not the HAC inference."
+          },
+          {
+            "model": "FF3",
+            "statistic": 3.6278344453574625,
+            "pvalue": 9.374585703331073e-09,
+            "df1": 25,
+            "df2": 731,
+            "T": 759,
+            "N": 25,
+            "L": 3,
+            "alpha_quadratic": 0.12844931453741,
+            "sharpe_factor_sq": 0.03528923760019907,
+            "cond_residual_cov": 65.06335656991396,
+            "cond_factor_cov": 2.8667525521314605,
+            "sample_start": "1963-07",
+            "sample_end": "2026-09",
+            "mean_abs_alpha": 0.0008699095431188371,
+            "assumptions": "Classical GRS (1989): i.i.d. multivariate-normal residuals, factors are traded excess returns, MLE covariances (divisor T) for residuals and factors, F(N, T-N-L). Not robust to heteroskedasticity/autocorrelation; not the HAC inference."
+          },
+          {
+            "model": "Carhart4",
+            "statistic": 3.201178326378831,
+            "pvalue": 3.2017872398685053e-07,
+            "df1": 25,
+            "df2": 730,
+            "T": 759,
+            "N": 25,
+            "L": 4,
+            "alpha_quadratic": 0.11808087418027316,
+            "sharpe_factor_sq": 0.07709136278087521,
+            "cond_residual_cov": 65.1201634527872,
+            "cond_factor_cov": 3.2378960871297733,
+            "sample_start": "1963-07",
+            "sample_end": "2026-09",
+            "mean_abs_alpha": 0.0008074377205161673,
+            "assumptions": "Classical GRS (1989): i.i.d. multivariate-normal residuals, factors are traded excess returns, MLE covariances (divisor T) for residuals and factors, F(N, T-N-L). Not robust to heteroskedasticity/autocorrelation; not the HAC inference."
+          },
+          {
+            "model": "FF5",
+            "statistic": 3.213684760530789,
+            "pvalue": 2.895508453880061e-07,
+            "df1": 25,
+            "df2": 729,
+            "T": 759,
+            "N": 25,
+            "L": 5,
+            "alpha_quadratic": 0.1185261496671194,
+            "sharpe_factor_sq": 0.07547030335431969,
+            "cond_residual_cov": 37.56734926868284,
+            "cond_factor_cov": 14.330257020410167,
+            "sample_start": "1963-07",
+            "sample_end": "2026-09",
+            "mean_abs_alpha": 0.0008857272525335024,
+            "assumptions": "Classical GRS (1989): i.i.d. multivariate-normal residuals, factors are traded excess returns, MLE covariances (divisor T) for residuals and factors, F(N, T-N-L). Not robust to heteroskedasticity/autocorrelation; not the HAC inference."
+          }
+        ],
+        "assets_sample": "2000-02 to 2026-09",
+        "grs_sample": "1963-07 to 2026-09",
+        "source": "Kenneth French Data Library, US, monthly (decimal)"
+      },
+      "custom_factors": {
+        "runtime_s": 4.02,
+        "characteristics": [
+          "momentum",
+          "low_vol"
+        ],
+        "unavailable": {
+          "value": "no point-in-time fundamentals in this mode",
+          "quality": "no point-in-time fundamentals in this mode"
+        },
+        "weightings": [
+          "ew"
+        ],
+        "n_panel_rows": 21279,
+        "tearsheet": [
+          {
+            "signal": "momentum",
+            "weighting": "ew",
+            "n_months": 160,
+            "start": "2011-02-28 00:00:00",
+            "end": "2024-05-31 00:00:00",
+            "mean_monthly": 0.0008376827731218693,
+            "ann_mean": 0.010052193277462432,
+            "ann_vol": 0.16144871200377026,
+            "sharpe_ann": 0.06226245569074398,
+            "t_mean_hac": 0.2491487212760652,
+            "hac_lags": 4,
+            "max_drawdown": -0.45070244404728543,
+            "hit_rate": 0.51875,
+            "avg_turnover_Q1": 0.2600090438074273,
+            "avg_turnover_Q5": 0.2607456794307189,
+            "n_log_events": 17
+          },
+          {
+            "signal": "low_vol",
+            "weighting": "ew",
+            "n_months": 166,
+            "start": "2010-08-31 00:00:00",
+            "end": "2024-05-31 00:00:00",
+            "mean_monthly": -0.010407319064187603,
+            "ann_mean": -0.12488782877025123,
+            "ann_vol": 0.21426670444923762,
+            "sharpe_ann": -0.5828615747428862,
+            "t_mean_hac": -2.316217317906906,
+            "hac_lags": 4,
+            "max_drawdown": -0.8902596691022779,
+            "hit_rate": 0.42168674698795183,
+            "avg_turnover_Q1": 0.0854863526154084,
+            "avg_turnover_Q5": 0.08794432836550942,
+            "n_log_events": 11
+          }
+        ],
+        "comparison": [
+          {
+            "custom": "momentum_ew",
+            "reference": "MOM",
+            "reference_source": "Kenneth French US factors",
+            "n_months": 160,
+            "correlation": 0.8594717405528286,
+            "start": "2011-02-28",
+            "end": "2024-05-31"
+          },
+          {
+            "custom": "low_vol_ew",
+            "reference": "MKT_RF_ff3",
+            "reference_source": "Kenneth French US factors",
+            "n_months": 166,
+            "correlation": -0.6408687190709504,
+            "start": "2010-08-31",
+            "end": "2024-05-31"
+          }
+        ]
+      },
+      "fama_macbeth": {
+        "runtime_s": 1.98,
+        "y": "ret_fwd_excess",
+        "n_specs_run": 4,
+        "linearmodels_check": {
+          "max_abs_param_diff": 8.673617379884035e-19,
+          "max_abs_se_kernel_vs_own_hac_diff": 8.673617379884035e-19,
+          "max_abs_se_unadj_diff": 8.673617379884035e-19
+        }
+      },
+      "risk_and_portfolio": {
+        "status": "not_run",
+        "reason": "real stock-level mode has no point-in-time market caps or fundamentals; the fundamental risk model, optimiser and backtest are demonstrated on synthetic data only"
+      }
+    },
+    "splits": {
+      "train": [
+        "2010-01",
+        "2017-07"
+      ],
+      "validation": [
+        "2017-08",
+        "2020-12"
+      ],
+      "oos": [
+        "2021-01",
+        "2024-05"
+      ],
+      "holdout": [
+        "2024-06",
+        "2026-11"
+      ]
+    },
+    "holdout": {
+      "start": "2024-06",
+      "end": "2026-11",
+      "consumed_by_run_all": false
+    },
+    "market_provenance_etfs": {
+      "source": "Yahoo Finance via yfinance",
+      "adjustment": "auto_adjust=True (split+dividend adjusted OHLC)",
+      "retrieved_at_utc": "2026-11-24T11:50:32+00:00",
+      "start": "2000-01-01",
+      "end": null,
+      "succeeded": [
+        "SPY",
+        "IWD",
+        "IWN",
+        "MTUM",
+        "QUAL",
+        "USMV"
+      ],
+      "failed": {},
+      "currency": "USD (assumed for US listings; not verified per ticker)",
+      "survivorship": "tickers chosen from CURRENT listings; delisted firms absent"
+    },
+    "market_provenance_stocks": {
+      "source": "Yahoo Finance via yfinance",
+      "adjustment": "auto_adjust=True (split+dividend adjusted OHLC)",
+      "retrieved_at_utc": "2026-11-24T11:51:09+00:00",
+      "start": "2010-01-01",
+      "end": null,
+      "succeeded": [
+        "AAPL",
+        "MSFT",
+        "ORCL",
+        "CSCO",
+        "IBM",
+        "INTC",
+        "TXN",
+        "QCOM",
+        "ADBE",
+        "CRM",
+        "NVDA",
+        "AMD",
+        "ADI",
+        "AMAT",
+        "MU",
+        "INTU",
+        "ACN",
+        "HPQ",
+        "KLAC",
+        "LRCX",
+        "GOOGL",
+        "CMCSA",
+        "VZ",
+        "T",
+        "DIS",
+        "NFLX",
+        "EA",
+        "JNJ",
+        "PFE",
+        "MRK",
+        "ABT",
+        "UNH",
+        "AMGN",
+        "BMY",
+        "LLY",
+        "MDT",
+        "GILD",
+        "CVS",
+        "TMO",
+        "DHR",
+        "CI",
+        "BDX",
+        "SYK",
+        "ISRG",
+        "JPM",
+        "BAC",
+        "WFC",
+        "C",
+        "GS",
+        "MS",
+        "AXP",
+        "USB",
+        "PNC",
+        "BLK",
+        "SCHW",
+        "AON",
+        "TRV",
+        "CB",
+        "MET",
+        "PRU",
+        "AMZN",
+        "HD",
+        "MCD",
+        "NKE",
+        "SBUX",
+        "LOW",
+        "TJX",
+        "BKNG",
+        "F",
+        "ROST",
+        "YUM",
+        "PG",
+        "KO",
+        "PEP",
+        "WMT",
+        "COST",
+        "MO",
+        "CL",
+        "KMB",
+        "GIS",
+        "KR",
+        "SYY",
+        "GE",
+        "HON",
+        "MMM",
+        "CAT",
+        "DE",
+        "UNP",
+        "UPS",
+        "LMT",
+        "RTX",
+        "BA",
+        "GD",
+        "NOC",
+        "EMR",
+        "ETN",
+        "CSX",
+        "NSC",
+        "FDX",
+        "ITW",
+        "WM",
+        "XOM",
+        "CVX",
+        "COP",
+        "SLB",
+        "EOG",
+        "OXY",
+        "VLO",
+        "HAL",
+        "NEE",
+        "DUK",
+        "SO",
+        "D",
+        "AEP",
+        "EXC",
+        "APD",
+        "SHW",
+        "ECL",
+        "NEM",
+        "FCX",
+        "SPG",
+        "PLD",
+        "AMT",
+        "EQR",
+        "PSA"
+      ],
+      "failed": {
+        "MMC": "empty response",
+        "BK": "empty response"
+      },
+      "currency": "USD (assumed for US listings; not verified per ticker)",
+      "survivorship": "tickers chosen from CURRENT listings; delisted firms absent"
+    }
+  },
+  "synthetic_research": {
+    "data_mode": "SYNTHETIC",
+    "size": "research",
+    "finished_at_utc": "2026-11-24T12:33:01+00:00",
+    "runtime_s": 58.66,
+    "stages_run": [
+      "timeseries",
+      "custom_factors",
+      "fama_macbeth",
+      "risk_and_portfolio"
+    ],
+    "environment": {
+      "python": "3.13.12",
+      "platform": "Windows",
+      "numpy": "2.5.5",
+      "pandas": "3.1.1",
+      "scipy": "1.18.1",
+      "statsmodels": "0.15.0",
+      "matplotlib": "3.11.2",
+      "cvxpy": "1.9.3",
+      "clarabel": "0.11.1",
+      "scs": "3.3.2",
+      "linearmodels": "7.1",
+      "yfinance": "1.8.0",
+      "backtester": "0.1.0",
+      "factors": "0.1.0"
+    },
+    "configs": {
+      "data": {
+        "synthetic": {
+          "seed": 20240607,
+          "sizes": {
+            "fast": {
+              "n_stocks": 120,
+              "n_years": 10,
+              "start": "2012-01-02"
+            },
+            "research": {
+              "n_stocks": 400,
+              "n_years": 20,
+              "start": "2002-01-01"
+            }
+          },
+          "n_industries": 8,
+          "delisting_prob_per_year": 0.01,
+          "delisting_return_range": [
+            -0.5,
+            -0.1
+          ],
+          "late_listing_fraction": 0.1,
+          "revision_prob": 0.15,
+          "publication_lag_days": [
+            60,
+            120
+          ],
+          "directory": "data/synthetic"
+        },
+        "french": {
+          "base_url": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/",
+          "region": "US",
+          "frequency": "monthly",
+          "files": {
+            "ff3": "F-F_Research_Data_Factors_CSV.zip",
+            "ff5": "F-F_Research_Data_5_Factors_2x3_CSV.zip",
+            "mom": "F-F_Momentum_Factor_CSV.zip",
+            "p25": "25_Portfolios_5x5_CSV.zip"
+          },
+          "directory": "data/french"
+        },
+        "market": {
+          "directory": "data/market",
+          "etfs": {
+            "SPY": "S&P 500 (market)",
+            "IWD": "Russell 1000 Value",
+            "IWN": "Russell 2000 Value",
+            "MTUM": "MSCI USA Momentum",
+            "QUAL": "MSCI USA Quality",
+            "USMV": "MSCI USA Min Volatility"
+          },
+          "etf_start": "2000-01-01",
+          "stock_universe_file": "configs/real_universe.csv",
+          "stock_start": "2010-01-01"
+        },
+        "splits": {
+          "train": 0.45,
+          "validation": 0.2,
+          "oos": 0.2,
+          "holdout": 0.15
+        }
+      },
+      "timeseries": {
+        "models": {
+          "CAPM": [
+            "MKT_RF"
+          ],
+          "FF3": [
+            "MKT_RF",
+            "SMB",
+            "HML"
+          ],
+          "Carhart4": [
+            "MKT_RF",
+            "SMB",
+            "HML",
+            "MOM"
+          ],
+          "FF5": [
+            "MKT_RF",
+            "SMB",
+            "HML",
+            "RMW",
+            "CMA"
+          ],
+          "FF5_plus_MOM": [
+            "MKT_RF",
+            "SMB",
+            "HML",
+            "RMW",
+            "CMA",
+            "MOM"
+          ]
+        },
+        "hac_lags": "auto",
+        "hac_small_sample_correction": true,
+        "rolling_window": 36,
+        "rolling_min_obs": 36,
+        "grs_models": [
+          "CAPM",
+          "FF3",
+          "Carhart4",
+          "FF5"
+        ],
+        "grs_condition_number_max": 10000000000.0
+      },
+      "characteristics": {
+        "momentum": {
+          "lookback_months": 12,
+          "skip_months": 1,
+          "min_months": 12
+        },
+        "low_vol": {
+          "lookback_days": 252,
+          "min_obs": 126
+        },
+        "value": {
+          "measure": "book_to_market"
+        },
+        "quality": {
+          "components": [
+            "roe",
+            "gpa",
+            "neg_leverage"
+          ],
+          "min_components": 2
+        },
+        "processing": {
+          "winsor_lower": 0.01,
+          "winsor_upper": 0.99,
+          "min_cross_section": 20,
+          "sector_relative": false
+        },
+        "sorts": {
+          "n_groups": 5,
+          "min_stocks": 25
+        },
+        "composite_weights": {
+          "value": 1.0,
+          "momentum": 1.0,
+          "low_vol": 1.0,
+          "quality": 1.0
+        },
+        "fama_macbeth": {
+          "specs": {
+            "uni_value": [
+              "value"
+            ],
+            "uni_momentum": [
+              "momentum"
+            ],
+            "uni_low_vol": [
+              "low_vol"
+            ],
+            "uni_quality": [
+              "quality"
+            ],
+            "multi": [
+              "value",
+              "momentum",
+              "low_vol",
+              "quality"
+            ],
+            "multi_size": [
+              "value",
+              "momentum",
+              "low_vol",
+              "quality",
+              "size"
+            ]
+          },
+          "industry_controls": [
+            false,
+            true
+          ],
+          "hac_lags": "auto",
+          "min_obs_per_month": 30,
+          "t_hurdle": 3.0,
+          "return_convention": "excess"
+        }
+      },
+      "risk_model": {
+        "frequency": "monthly",
+        "style_factors": [
+          "size",
+          "value",
+          "momentum",
+          "low_vol",
+          "quality"
+        ],
+        "identification": "cap_weighted_sum_zero",
+        "regression_weight": "sqrt_cap",
+        "exposure_standardisation": "cap_weighted_mean_equal_weighted_std",
+        "factor_cov": {
+          "half_life_months": 18,
+          "min_periods": 24,
+          "demean": false,
+          "eigen_floor": 1e-12
+        },
+        "specific_risk": {
+          "half_life_months": 18,
+          "min_obs": 6,
+          "shrink_k": 12,
+          "n_size_buckets": 3,
+          "floor_vol_monthly": 0.02
+        },
+        "validation": {
+          "n_random_portfolios": 20,
+          "random_seed": 7,
+          "rolling_window_months": 12,
+          "bootstrap_reps": 2000
+        }
+      },
+      "portfolio": {
+        "max_weight": 0.05,
+        "long_only": true,
+        "full_investment": true,
+        "turnover_one_way_max": 0.2,
+        "initial_deployment_exempt": true,
+        "risk_aversion": 1000.0,
+        "te_budget_annual": 0.04,
+        "te_grid_annual": [
+          0.02,
+          0.04,
+          0.06
+        ],
+        "active_exposure_bounds": {
+          "size": [
+            -0.3,
+            0.3
+          ],
+          "value": [
+            -1.0,
+            1.0
+          ],
+          "momentum": [
+            -1.0,
+            1.0
+          ],
+          "low_vol": [
+            -1.0,
+            1.0
+          ],
+          "quality": [
+            -1.0,
+            1.0
+          ]
+        },
+        "industry_active_max": 0.05,
+        "tcost_bps_penalty": 0.0,
+        "solvers": [
+          "CLARABEL",
+          "SCS"
+        ],
+        "solver_tol": 1e-06,
+        "constraint_check_tol": 1e-05,
+        "backtest": {
+          "initial_cash": 10000000,
+          "cost_bps_one_way": 10,
+          "cash_buffer": 0.002,
+          "fractional": false,
+          "execution_delay": 1
+        }
+      }
+    },
+    "seeds": {
+      "synthetic": 20240607,
+      "random_portfolios": 7
+    },
+    "synthetic_provenance": {
+      "data_mode": "SYNTHETIC",
+      "warning": "Synthetic data generated by factors.synthetic. Not real market data.",
+      "spec": {
+        "n_stocks": 400,
+        "n_years": 20,
+        "start": "2002-01-01",
+        "n_industries": 8,
+        "seed": 20240607,
+        "delisting_prob_per_year": 0.01,
+        "delisting_return_range": [
+          -0.5,
+          -0.1
+        ],
+        "late_listing_fraction": 0.1,
+        "revision_prob": 0.15,
+        "publication_lag_days": [
+          60,
+          120
+        ],
+        "academic_months": 360,
+        "rf_annual": 0.02,
+        "style_premia_monthly": {
+          "size": -0.001,
+          "value": 0.003,
+          "quality": 0.002,
+          "momentum": 0.0025
+        },
+        "style_vol_annual": {
+          "size": 0.05,
+          "value": 0.06,
+          "quality": 0.04,
+          "momentum": 0.07
+        }
+      },
+      "n_price_rows": 1781443,
+      "n_fundamental_rows": 9711,
+      "n_restatements": 1311,
+      "n_delisted": 70,
+      "n_late_listed": 35,
+      "units": "decimal returns; prices in synthetic USD",
+      "academic_true_model": "25 portfolios: FF5 with zero alpha; funds: see fund_truth",
+      "fund_truth": {
+        "VALUE_FUND": {
+          "alpha_monthly": 0.0,
+          "MKT_RF": 1.0,
+          "HML": 0.4
+        },
+        "SMALL_FUND": {
+          "alpha_monthly": 0.0,
+          "MKT_RF": 1.05,
+          "SMB": 0.8
+        },
+        "MOMENTUM_FUND": {
+          "alpha_monthly": 0.0,
+          "MKT_RF": 1.0,
+          "MOM": 0.5
+        },
+        "QUALITY_FUND": {
+          "alpha_monthly": 0.0,
+          "MKT_RF": 0.9,
+          "RMW": 0.4,
+          "CMA": 0.2
+        },
+        "MARKET_FUND": {
+          "alpha_monthly": 0.0,
+          "MKT_RF": 1.0
+        },
+        "ACTIVE_FUND": {
+          "alpha_monthly": 0.0015,
+          "MKT_RF": 0.95,
+          "SMB": 0.2,
+          "HML": 0.2
+        }
+      },
+      "factor_mean_true_monthly": {
+        "MKT_RF": 0.006,
+        "SMB": 0.002,
+        "HML": 0.003,
+        "RMW": 0.003,
+        "CMA": 0.003,
+        "MOM": 0.006
+      },
+      "stock_style_premia_monthly_true": {
+        "size": -0.001,
+        "value": 0.003,
+        "quality": 0.002,
+        "momentum": 0.0025
+      }
+    },
+    "stages": {
+      "timeseries": {
+        "runtime_s": 1.59,
+        "n_regressions": 30,
+        "grs": [
+          {
+            "model": "CAPM",
+            "statistic": 1.5450481907894205,
+            "pvalue": 0.04848961979540747,
+            "df1": 25,
+            "df2": 334,
+            "T": 360,
+            "N": 25,
+            "L": 1,
+            "alpha_quadratic": 0.11683273725356177,
+            "sharpe_factor_sq": 0.010250281520392642,
+            "cond_residual_cov": 234.7927136507228,
+            "cond_factor_cov": 1.0,
+            "sample_start": "1996-01",
+            "sample_end": "2025-12",
+            "mean_abs_alpha": 0.004509407805712967,
+            "assumptions": "Classical GRS (1989): i.i.d. multivariate-normal residuals, factors are traded excess returns, MLE covariances (divisor T) for residuals and factors, F(N, T-N-L). Not robust to heteroskedasticity/autocorrelation; not the HAC inference."
+          },
+          {
+            "model": "FF3",
+            "statistic": 1.2201579421815827,
+            "pvalue": 0.21762869308573796,
+            "df1": 25,
+            "df2": 332,
+            "T": 360,
+            "N": 25,
+            "L": 3,
+            "alpha_quadratic": 0.09554075420887748,
+            "sharpe_factor_sq": 0.03984998337622943,
+            "cond_residual_cov": 24.818193683569103,
+            "cond_factor_cov": 2.702072047323832,
+            "sample_start": "1996-01",
+            "sample_end": "2025-12",
+            "mean_abs_alpha": 0.0013003839238254163,
+            "assumptions": "Classical GRS (1989): i.i.d. multivariate-normal residuals, factors are traded excess returns, MLE covariances (divisor T) for residuals and factors, F(N, T-N-L). Not robust to heteroskedasticity/autocorrelation; not the HAC inference."
+          },
+          {
+            "model": "Carhart4",
+            "statistic": 1.0929230574447202,
+            "pvalue": 0.34823853332140337,
+            "df1": 25,
+            "df2": 331,
+            "T": 360,
+            "N": 25,
+            "L": 4,
+            "alpha_quadratic": 0.08891656813624724,
+            "sharpe_factor_sq": 0.07716216078043432,
+            "cond_residual_cov": 24.603986294939958,
+            "cond_factor_cov": 2.8663040692207002,
+            "sample_start": "1996-01",
+            "sample_end": "2025-12",
+            "mean_abs_alpha": 0.001165312681515432,
+            "assumptions": "Classical GRS (1989): i.i.d. multivariate-normal residuals, factors are traded excess returns, MLE covariances (divisor T) for residuals and factors, F(N, T-N-L). Not robust to heteroskedasticity/autocorrelation; not the HAC inference."
+          },
+          {
+            "model": "FF5",
+            "statistic": 0.8864196894124119,
+            "pvalue": 0.6249471924490648,
+            "df1": 25,
+            "df2": 330,
+            "T": 360,
+            "N": 25,
+            "L": 5,
+            "alpha_quadratic": 0.07252218731822072,
+            "sharpe_factor_sq": 0.07995443245973244,
+            "cond_residual_cov": 5.440898110961469,
+            "cond_factor_cov": 10.530358240765947,
+            "sample_start": "1996-01",
+            "sample_end": "2025-12",
+            "mean_abs_alpha": 0.000607911191248927,
+            "assumptions": "Classical GRS (1989): i.i.d. multivariate-normal residuals, factors are traded excess returns, MLE covariances (divisor T) for residuals and factors, F(N, T-N-L). Not robust to heteroskedasticity/autocorrelation; not the HAC inference."
+          }
+        ],
+        "assets_sample": "1996-01 to 2025-12",
+        "grs_sample": "1996-01 to 2025-12",
+        "source": "synthetic academic factors (true model for the 25 portfolios: FF5, zero alpha)"
+      },
+      "custom_factors": {
+        "runtime_s": 16.38,
+        "characteristics": [
+          "value",
+          "momentum",
+          "low_vol",
+          "quality"
+        ],
+        "unavailable": {},
+        "weightings": [
+          "ew",
+          "vw"
+        ],
+        "n_panel_rows": 70274,
+        "tearsheet": [
+          {
+            "signal": "value",
+            "weighting": "ew",
+            "n_months": 196,
+            "start": "2002-02-28 00:00:00",
+            "end": "2018-05-31 00:00:00",
+            "mean_monthly": 0.00580536363729937,
+            "ann_mean": 0.06966436364759244,
+            "ann_vol": 0.14767847404318984,
+            "sharpe_ann": 0.47172998027605895,
+            "t_mean_hac": 2.388666247034213,
+            "hac_lags": 4,
+            "max_drawdown": -0.29050881725634314,
+            "hit_rate": 0.5510204081632653,
+            "avg_turnover_Q1": 0.158321832053263,
+            "avg_turnover_Q5": 0.1648971131300431,
+            "n_log_events": 8
+          },
+          {
+            "signal": "value",
+            "weighting": "vw",
+            "n_months": 196,
+            "start": "2002-02-28 00:00:00",
+            "end": "2018-05-31 00:00:00",
+            "mean_monthly": 0.008560293643878237,
+            "ann_mean": 0.10272352372653884,
+            "ann_vol": 0.1681757378832089,
+            "sharpe_ann": 0.6108106021682872,
+            "t_mean_hac": 2.913597259123249,
+            "hac_lags": 4,
+            "max_drawdown": -0.31410037943078406,
+            "hit_rate": 0.6071428571428571,
+            "avg_turnover_Q1": 0.167990028370528,
+            "avg_turnover_Q5": 0.18283424535619364,
+            "n_log_events": 8
+          },
+          {
+            "signal": "momentum",
+            "weighting": "ew",
+            "n_months": 184,
+            "start": "2003-02-28 00:00:00",
+            "end": "2018-05-31 00:00:00",
+            "mean_monthly": 0.005941126691932557,
+            "ann_mean": 0.07129352030319068,
+            "ann_vol": 0.26049356918076916,
+            "sharpe_ann": 0.27368629685332707,
+            "t_mean_hac": 1.2211350095340177,
+            "hac_lags": 4,
+            "max_drawdown": -0.6010377009338707,
+            "hit_rate": 0.5652173913043478,
+            "avg_turnover_Q1": 0.24403363771666728,
+            "avg_turnover_Q5": 0.2530936134330359,
+            "n_log_events": 20
+          },
+          {
+            "signal": "momentum",
+            "weighting": "vw",
+            "n_months": 184,
+            "start": "2003-02-28 00:00:00",
+            "end": "2018-05-31 00:00:00",
+            "mean_monthly": 0.0022695872127845994,
+            "ann_mean": 0.027235046553415194,
+            "ann_vol": 0.25698061541201916,
+            "sharpe_ann": 0.10598093754950742,
+            "t_mean_hac": 0.47442646942887495,
+            "hac_lags": 4,
+            "max_drawdown": -0.5711030688826514,
+            "hit_rate": 0.5217391304347826,
+            "avg_turnover_Q1": 0.32136922391219075,
+            "avg_turnover_Q5": 0.26079518905970145,
+            "n_log_events": 20
+          },
+          {
+            "signal": "low_vol",
+            "weighting": "ew",
+            "n_months": 191,
+            "start": "2002-07-31 00:00:00",
+            "end": "2018-05-31 00:00:00",
+            "mean_monthly": 0.0021345860877310576,
+            "ann_mean": 0.02561503305277269,
+            "ann_vol": 0.08245692798193302,
+            "sharpe_ann": 0.310647433510804,
+            "t_mean_hac": 1.3105556043234472,
+            "hac_lags": 4,
+            "max_drawdown": -0.2060565843102743,
+            "hit_rate": 0.5602094240837696,
+            "avg_turnover_Q1": 0.0942242435871908,
+            "avg_turnover_Q5": 0.07913017932908256,
+            "n_log_events": 13
+          },
+          {
+            "signal": "low_vol",
+            "weighting": "vw",
+            "n_months": 191,
+            "start": "2002-07-31 00:00:00",
+            "end": "2018-05-31 00:00:00",
+            "mean_monthly": -0.0006176830556843993,
+            "ann_mean": -0.007412196668212792,
+            "ann_vol": 0.12101547271299629,
+            "sharpe_ann": -0.0612499914435881,
+            "t_mean_hac": -0.23289793076512466,
+            "hac_lags": 4,
+            "max_drawdown": -0.5680831763679095,
+            "hit_rate": 0.49214659685863876,
+            "avg_turnover_Q1": 0.07917659767868244,
+            "avg_turnover_Q5": 0.07821314620620787,
+            "n_log_events": 13
+          },
+          {
+            "signal": "quality",
+            "weighting": "ew",
+            "n_months": 196,
+            "start": "2002-02-28 00:00:00",
+            "end": "2018-05-31 00:00:00",
+            "mean_monthly": 0.006287182018655335,
+            "ann_mean": 0.07544618422386401,
+            "ann_vol": 0.14242248516330627,
+            "sharpe_ann": 0.5297350635144089,
+            "t_mean_hac": 2.1285800669187993,
+            "hac_lags": 4,
+            "max_drawdown": -0.3137179921842036,
+            "hit_rate": 0.6020408163265306,
+            "avg_turnover_Q1": 0.07440202213005123,
+            "avg_turnover_Q5": 0.07274001405616433,
+            "n_log_events": 8
+          },
+          {
+            "signal": "quality",
+            "weighting": "vw",
+            "n_months": 196,
+            "start": "2002-02-28 00:00:00",
+            "end": "2018-05-31 00:00:00",
+            "mean_monthly": 0.006553704661020802,
+            "ann_mean": 0.07864445593224963,
+            "ann_vol": 0.1657072183809098,
+            "sharpe_ann": 0.4745988539344753,
+            "t_mean_hac": 1.925057034493723,
+            "hac_lags": 4,
+            "max_drawdown": -0.2654332719802417,
+            "hit_rate": 0.5663265306122449,
+            "avg_turnover_Q1": 0.054283732183704775,
+            "avg_turnover_Q5": 0.053306208793667015,
+            "n_log_events": 8
+          }
+        ],
+        "comparison": [
+          {
+            "custom": "value_ew",
+            "reference": "value",
+            "reference_source": "TRUE synthetic style factor returns",
+            "n_months": 196,
+            "correlation": 0.7714693014313185,
+            "start": "2002-02-28",
+            "end": "2018-05-31"
+          },
+          {
+            "custom": "momentum_ew",
+            "reference": "momentum",
+            "reference_source": "TRUE synthetic style factor returns",
+            "n_months": 184,
+            "correlation": 0.9186155499978682,
+            "start": "2003-02-28",
+            "end": "2018-05-31"
+          },
+          {
+            "custom": "quality_ew",
+            "reference": "quality",
+            "reference_source": "TRUE synthetic style factor returns",
+            "n_months": 196,
+            "correlation": 0.8627302699352799,
+            "start": "2002-02-28",
+            "end": "2018-05-31"
+          }
+        ]
+      },
+      "fama_macbeth": {
+        "runtime_s": 5.83,
+        "y": "ret_fwd_excess",
+        "n_specs_run": 12,
+        "linearmodels_check": {
+          "max_abs_param_diff": 5.204170427930421e-18,
+          "max_abs_se_kernel_vs_own_hac_diff": 5.204170427930421e-18,
+          "max_abs_se_unadj_diff": 3.2526065174565133e-19
+        }
+      },
+      "risk_and_portfolio": {
+        "runtime_s": 34.3,
+        "identification": "cap_weighted_sum_zero",
+        "n_risk_model_dates": 161,
+        "factor_return_r2_mean": 0.24059252400289735,
+        "te_selected_annual": 0.06,
+        "te_selection": [
+          {
+            "te_annual": 0.02,
+            "validation_ir_net_model": 0.6934459611589003,
+            "n_months": 47,
+            "n_fallbacks": 0
+          },
+          {
+            "te_annual": 0.04,
+            "validation_ir_net_model": 0.7859280873504391,
+            "n_months": 47,
+            "n_fallbacks": 0
+          },
+          {
+            "te_annual": 0.06,
+            "validation_ir_net_model": 1.0275948116864688,
+            "n_months": 47,
+            "n_fallbacks": 0
+          }
+        ],
+        "solver_status_counts": {
+          "optimal": 93
+        },
+        "solvers_used": {
+          "CLARABEL": 93
+        },
+        "fallbacks": 0,
+        "post_solve_violations": 0,
+        "bias_all": [
+          {
+            "group": "equal_weight",
+            "period": "all",
+            "n": 160,
+            "bias": 1.0195278708194704,
+            "ci_low": 0.9190085186777855,
+            "ci_high": 1.14493159413138,
+            "demeaned": false,
+            "mean_z": 0.08698684703485192,
+            "boot_ci_low": 0.9203164882220353,
+            "boot_ci_high": 1.1183998502713335
+          },
+          {
+            "group": "optimised",
+            "period": "all",
+            "n": 92,
+            "bias": 0.8984198366605667,
+            "ci_low": 0.7852558241287905,
+            "ci_high": 1.0499932600570656,
+            "demeaned": false,
+            "mean_z": 0.24351719215933856,
+            "boot_ci_low": 0.7822343470998105,
+            "boot_ci_high": 1.0167980430943429
+          },
+          {
+            "group": "random (20)",
+            "period": "all",
+            "n": 3200,
+            "bias": 1.01579325708091,
+            "ci_low": 0.9915070884177242,
+            "ci_high": 1.041307817316578,
+            "demeaned": false,
+            "mean_z": 0.08534488715311034,
+            "boot_ci_low": NaN,
+            "boot_ci_high": NaN
+          },
+          {
+            "group": "simple_tilt",
+            "period": "all",
+            "n": 92,
+            "bias": 0.9282621925538973,
+            "ci_low": 0.8113392684325872,
+            "ci_high": 1.084870353453279,
+            "demeaned": false,
+            "mean_z": 0.27981844610322154,
+            "boot_ci_low": 0.8037719008188556,
+            "boot_ci_high": 1.0522187180738074
+          }
+        ],
+        "tearsheet_oos": [
+          {
+            "strategy": "ew",
+            "period": "oos",
+            "n_days": 1000,
+            "start": "2014-08-01",
+            "end": "2018-05-31",
+            "ann_return": 0.22041850316654665,
+            "ann_vol": 0.17163391930094588,
+            "max_drawdown": -0.16963480510123297,
+            "return_over_vol": 1.2842362632298867,
+            "cost_commissions": 67115.05218255498,
+            "cost_spread_costs": 0.0,
+            "cost_slippage_costs": 0.0,
+            "cost_impact_costs": 0.0,
+            "cost_interest": 0.0,
+            "cost_borrow_fees": 0.0,
+            "cost_traded_notional": 67115052.18255492,
+            "cost_total_trading_costs": 67115.05218255498,
+            "cost_net_financing": 0.0,
+            "tracking_error": NaN,
+            "info_ratio": NaN
+          },
+          {
+            "strategy": "tilt",
+            "period": "oos",
+            "n_days": 1000,
+            "start": "2014-08-01",
+            "end": "2018-05-31",
+            "ann_return": 0.2631065434167985,
+            "ann_vol": 0.17240598051212613,
+            "max_drawdown": -0.1463413802597323,
+            "return_over_vol": 1.5260871034476264,
+            "cost_commissions": 637951.4641793856,
+            "cost_spread_costs": 0.0,
+            "cost_slippage_costs": 0.0,
+            "cost_impact_costs": 0.0,
+            "cost_interest": 0.0,
+            "cost_borrow_fees": 0.0,
+            "cost_traded_notional": 637951464.1793873,
+            "cost_total_trading_costs": 637951.4641793856,
+            "cost_net_financing": 0.0,
+            "tracking_error": 0.07158753008606965,
+            "info_ratio": 0.4825756434959074
+          },
+          {
+            "strategy": "opt",
+            "period": "oos",
+            "n_days": 1000,
+            "start": "2014-08-01",
+            "end": "2018-05-31",
+            "ann_return": 0.2292826388653202,
+            "ann_vol": 0.15421676561713146,
+            "max_drawdown": -0.12036657325166533,
+            "return_over_vol": 1.4867555933221432,
+            "cost_commissions": 430692.58841340354,
+            "cost_spread_costs": 0.0,
+            "cost_slippage_costs": 0.0,
+            "cost_impact_costs": 0.0,
+            "cost_interest": 0.0,
+            "cost_borrow_fees": 0.0,
+            "cost_traded_notional": 430692588.4134025,
+            "cost_total_trading_costs": 430692.58841340354,
+            "cost_net_financing": 0.0,
+            "tracking_error": 0.05054204766570452,
+            "info_ratio": 0.08731108172493199
+          }
+        ],
+        "backtester_version": "0.1.0",
+        "attribution_date": "2018-05-31",
+        "total_sigma_annual": 0.1946481785677333,
+        "factor_share_of_sigma": 0.9809602897760096,
+        "active_te_annual": 0.060000000025003525,
+        "target_vs_realised_mean_sum_abs_diff": 0.058450334994215834,
+        "mean_residual_cash": 0.00017947176187751144,
+        "final_untradeable_weight": 0.019500816348709468
+      }
+    },
+    "splits": {
+      "train": [
+        "2002-01",
+        "2010-08"
+      ],
+      "validation": [
+        "2010-09",
+        "2014-07"
+      ],
+      "oos": [
+        "2014-08",
+        "2018-05"
+      ],
+      "holdout": [
+        "2018-06",
+        "2021-04"
+      ]
+    },
+    "holdout": {
+      "start": "2018-06",
+      "end": "2021-04",
+      "consumed_by_run_all": false
+    }
+  }
+}

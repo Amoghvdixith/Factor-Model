@@ -1,0 +1,4 @@
+,custom,reference,reference_source,n_months,correlation,start,end
+0,value_ew,value,TRUE synthetic style factor returns,98,0.7250159263269356,2012-02-29,2020-03-31
+1,momentum_ew,momentum,TRUE synthetic style factor returns,86,0.8641768792169638,2013-02-28,2020-03-31
+2,quality_ew,quality,TRUE synthetic style factor returns,98,0.7143156250897766,2012-02-29,2020-03-31

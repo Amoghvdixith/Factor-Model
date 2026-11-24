@@ -1,0 +1,12 @@
+models:
+  CAPM: [MKT_RF]
+  FF3: [MKT_RF, SMB, HML]
+  Carhart4: [MKT_RF, SMB, HML, MOM]
+  FF5: [MKT_RF, SMB, HML, RMW, CMA]
+  FF5_plus_MOM: [MKT_RF, SMB, HML, RMW, CMA, MOM]   # NOT the standard Carhart model
+hac_lags: auto        # "auto" = floor(4*(T/100)^(2/9)); or an integer
+hac_small_sample_correction: true
+rolling_window: 36    # monthly observations
+rolling_min_obs: 36
+grs_models: [CAPM, FF3, Carhart4, FF5]
+grs_condition_number_max: 1.0e+10

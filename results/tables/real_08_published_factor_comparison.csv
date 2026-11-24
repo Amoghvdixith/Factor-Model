@@ -1,0 +1,3 @@
+,custom,reference,reference_source,n_months,correlation,start,end
+0,momentum_ew,MOM,Kenneth French US factors,160,0.8594717405528286,2011-02-28,2024-05-31
+1,low_vol_ew,MKT_RF_ff3,Kenneth French US factors,166,-0.6408687190709504,2010-08-31,2024-05-31

@@ -1,0 +1,4 @@
+te_annual,validation_ir_net_model,n_months,n_fallbacks,selected
+0.02,-0.7455966249802443,23,0,True
+0.04,-0.7558480960761275,23,0,False
+0.06,-0.898523828055346,23,0,False

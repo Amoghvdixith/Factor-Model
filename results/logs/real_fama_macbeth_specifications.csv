@@ -1,0 +1,65 @@
+logged_at_utc,spec,xs,status,reason
+2026-11-24T11:51:30+00:00,uni_value,"[""value""]",not_run,unavailable: ['value']
+2026-11-24T11:51:31+00:00,uni_momentum,"[""momentum""]",False,run,160,13
+2026-11-24T11:51:31+00:00,uni_momentum_ind,"[""momentum""]",True,run,160,13
+2026-11-24T11:51:31+00:00,uni_low_vol,"[""low_vol""]",False,run,166,7
+2026-11-24T11:51:32+00:00,uni_low_vol_ind,"[""low_vol""]",True,run,166,7
+2026-11-24T11:51:32+00:00,uni_quality,"[""quality""]",not_run,unavailable: ['quality']
+2026-11-24T11:51:32+00:00,multi,"[""value"", ""momentum"", ""low_vol"", ""quality""]",not_run,"unavailable: ['quality', 'value']"
+2026-11-24T11:51:32+00:00,multi_size,"[""value"", ""momentum"", ""low_vol"", ""quality"", ""size""]",not_run,"unavailable: ['quality', 'size', 'value']"
+2026-11-24T12:03:40+00:00,uni_value,"[""value""]",not_run,unavailable: ['value']
+2026-11-24T12:03:40+00:00,uni_momentum,"[""momentum""]",False,run,160,13
+2026-11-24T12:03:41+00:00,uni_momentum_ind,"[""momentum""]",True,run,160,13
+2026-11-24T12:03:41+00:00,uni_low_vol,"[""low_vol""]",False,run,166,7
+2026-11-24T12:03:41+00:00,uni_low_vol_ind,"[""low_vol""]",True,run,166,7
+2026-11-24T12:03:41+00:00,uni_quality,"[""quality""]",not_run,unavailable: ['quality']
+2026-11-24T12:03:41+00:00,multi,"[""value"", ""momentum"", ""low_vol"", ""quality""]",not_run,"unavailable: ['quality', 'value']"
+2026-11-24T12:03:41+00:00,multi_size,"[""value"", ""momentum"", ""low_vol"", ""quality"", ""size""]",not_run,"unavailable: ['quality', 'size', 'value']"
+2026-11-24T12:05:12+00:00,uni_value,"[""value""]",not_run,unavailable: ['value']
+2026-11-24T12:05:12+00:00,uni_momentum,"[""momentum""]",False,run,160,13
+2026-11-24T12:05:12+00:00,uni_momentum_ind,"[""momentum""]",True,run,160,13
+2026-11-24T12:05:13+00:00,uni_low_vol,"[""low_vol""]",False,run,166,7
+2026-11-24T12:05:13+00:00,uni_low_vol_ind,"[""low_vol""]",True,run,166,7
+2026-11-24T12:05:13+00:00,uni_quality,"[""quality""]",not_run,unavailable: ['quality']
+2026-11-24T12:05:13+00:00,multi,"[""value"", ""momentum"", ""low_vol"", ""quality""]",not_run,"unavailable: ['quality', 'value']"
+2026-11-24T12:05:13+00:00,multi_size,"[""value"", ""momentum"", ""low_vol"", ""quality"", ""size""]",not_run,"unavailable: ['quality', 'size', 'value']"
+2026-11-24T12:18:16+00:00,uni_value,"[""value""]",not_run,unavailable: ['value']
+2026-11-24T12:18:16+00:00,uni_momentum,"[""momentum""]",False,run,160,13
+2026-11-24T12:18:17+00:00,uni_momentum_ind,"[""momentum""]",True,run,160,13
+2026-11-24T12:18:17+00:00,uni_low_vol,"[""low_vol""]",False,run,166,7
+2026-11-24T12:18:18+00:00,uni_low_vol_ind,"[""low_vol""]",True,run,166,7
+2026-11-24T12:18:18+00:00,uni_quality,"[""quality""]",not_run,unavailable: ['quality']
+2026-11-24T12:18:18+00:00,multi,"[""value"", ""momentum"", ""low_vol"", ""quality""]",not_run,"unavailable: ['quality', 'value']"
+2026-11-24T12:18:18+00:00,multi_size,"[""value"", ""momentum"", ""low_vol"", ""quality"", ""size""]",not_run,"unavailable: ['quality', 'size', 'value']"
+2026-11-24T12:19:33+00:00,uni_value,"[""value""]",not_run,unavailable: ['value']
+2026-11-24T12:19:33+00:00,uni_momentum,"[""momentum""]",False,run,160,13
+2026-11-24T12:19:33+00:00,uni_momentum_ind,"[""momentum""]",True,run,160,13
+2026-11-24T12:19:34+00:00,uni_low_vol,"[""low_vol""]",False,run,166,7
+2026-11-24T12:19:34+00:00,uni_low_vol_ind,"[""low_vol""]",True,run,166,7
+2026-11-24T12:19:34+00:00,uni_quality,"[""quality""]",not_run,unavailable: ['quality']
+2026-11-24T12:19:34+00:00,multi,"[""value"", ""momentum"", ""low_vol"", ""quality""]",not_run,"unavailable: ['quality', 'value']"
+2026-11-24T12:19:34+00:00,multi_size,"[""value"", ""momentum"", ""low_vol"", ""quality"", ""size""]",not_run,"unavailable: ['quality', 'size', 'value']"
+2026-11-24T12:24:08+00:00,uni_value,"[""value""]",not_run,unavailable: ['value']
+2026-11-24T12:24:10+00:00,uni_momentum,"[""momentum""]",False,run,160,13
+2026-11-24T12:24:14+00:00,uni_momentum_ind,"[""momentum""]",True,run,160,13
+2026-11-24T12:24:16+00:00,uni_low_vol,"[""low_vol""]",False,run,166,7
+2026-11-24T12:24:21+00:00,uni_low_vol_ind,"[""low_vol""]",True,run,166,7
+2026-11-24T12:24:21+00:00,uni_quality,"[""quality""]",not_run,unavailable: ['quality']
+2026-11-24T12:24:21+00:00,multi,"[""value"", ""momentum"", ""low_vol"", ""quality""]",not_run,"unavailable: ['quality', 'value']"
+2026-11-24T12:24:21+00:00,multi_size,"[""value"", ""momentum"", ""low_vol"", ""quality"", ""size""]",not_run,"unavailable: ['quality', 'size', 'value']"
+2026-11-24T12:31:44+00:00,uni_value,"[""value""]",not_run,unavailable: ['value']
+2026-11-24T12:31:44+00:00,uni_momentum,"[""momentum""]",False,run,160,13
+2026-11-24T12:31:45+00:00,uni_momentum_ind,"[""momentum""]",True,run,160,13
+2026-11-24T12:31:45+00:00,uni_low_vol,"[""low_vol""]",False,run,166,7
+2026-11-24T12:31:45+00:00,uni_low_vol_ind,"[""low_vol""]",True,run,166,7
+2026-11-24T12:31:45+00:00,uni_quality,"[""quality""]",not_run,unavailable: ['quality']
+2026-11-24T12:31:45+00:00,multi,"[""value"", ""momentum"", ""low_vol"", ""quality""]",not_run,"unavailable: ['quality', 'value']"
+2026-11-24T12:31:45+00:00,multi_size,"[""value"", ""momentum"", ""low_vol"", ""quality"", ""size""]",not_run,"unavailable: ['quality', 'size', 'value']"
+2026-11-24T12:36:54+00:00,uni_value,"[""value""]",not_run,unavailable: ['value']
+2026-11-24T12:36:54+00:00,uni_momentum,"[""momentum""]",False,run,160,13
+2026-11-24T12:36:54+00:00,uni_momentum_ind,"[""momentum""]",True,run,160,13
+2026-11-24T12:36:55+00:00,uni_low_vol,"[""low_vol""]",False,run,166,7
+2026-11-24T12:36:55+00:00,uni_low_vol_ind,"[""low_vol""]",True,run,166,7
+2026-11-24T12:36:55+00:00,uni_quality,"[""quality""]",not_run,unavailable: ['quality']
+2026-11-24T12:36:55+00:00,multi,"[""value"", ""momentum"", ""low_vol"", ""quality""]",not_run,"unavailable: ['quality', 'value']"
+2026-11-24T12:36:55+00:00,multi_size,"[""value"", ""momentum"", ""low_vol"", ""quality"", ""size""]",not_run,"unavailable: ['quality', 'size', 'value']"

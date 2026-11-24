@@ -1,0 +1,129 @@
+# Current large-cap US names with CURRENT sector labels (not point-in-time). Survivorship-biased by construction.
+ticker,sector
+AAPL,Information Technology
+MSFT,Information Technology
+ORCL,Information Technology
+CSCO,Information Technology
+IBM,Information Technology
+INTC,Information Technology
+TXN,Information Technology
+QCOM,Information Technology
+ADBE,Information Technology
+CRM,Information Technology
+NVDA,Information Technology
+AMD,Information Technology
+ADI,Information Technology
+AMAT,Information Technology
+MU,Information Technology
+INTU,Information Technology
+ACN,Information Technology
+HPQ,Information Technology
+KLAC,Information Technology
+LRCX,Information Technology
+GOOGL,Communication Services
+CMCSA,Communication Services
+VZ,Communication Services
+T,Communication Services
+DIS,Communication Services
+NFLX,Communication Services
+EA,Communication Services
+JNJ,Health Care
+PFE,Health Care
+MRK,Health Care
+ABT,Health Care
+UNH,Health Care
+AMGN,Health Care
+BMY,Health Care
+LLY,Health Care
+MDT,Health Care
+GILD,Health Care
+CVS,Health Care
+TMO,Health Care
+DHR,Health Care
+CI,Health Care
+BDX,Health Care
+SYK,Health Care
+ISRG,Health Care
+JPM,Financials
+BAC,Financials
+WFC,Financials
+C,Financials
+GS,Financials
+MS,Financials
+AXP,Financials
+USB,Financials
+PNC,Financials
+BLK,Financials
+SCHW,Financials
+MMC,Financials
+AON,Financials
+TRV,Financials
+CB,Financials
+MET,Financials
+PRU,Financials
+BK,Financials
+AMZN,Consumer Discretionary
+HD,Consumer Discretionary
+MCD,Consumer Discretionary
+NKE,Consumer Discretionary
+SBUX,Consumer Discretionary
+LOW,Consumer Discretionary
+TJX,Consumer Discretionary
+BKNG,Consumer Discretionary
+F,Consumer Discretionary
+ROST,Consumer Discretionary
+YUM,Consumer Discretionary
+PG,Consumer Staples
+KO,Consumer Staples
+PEP,Consumer Staples
+WMT,Consumer Staples
+COST,Consumer Staples
+MO,Consumer Staples
+CL,Consumer Staples
+KMB,Consumer Staples
+GIS,Consumer Staples
+KR,Consumer Staples
+SYY,Consumer Staples
+GE,Industrials
+HON,Industrials
+MMM,Industrials
+CAT,Industrials
+DE,Industrials
+UNP,Industrials
+UPS,Industrials
+LMT,Industrials
+RTX,Industrials
+BA,Industrials
+GD,Industrials
+NOC,Industrials
+EMR,Industrials
+ETN,Industrials
+CSX,Industrials
+NSC,Industrials
+FDX,Industrials
+ITW,Industrials
+WM,Industrials
+XOM,Energy
+CVX,Energy
+COP,Energy
+SLB,Energy
+EOG,Energy
+OXY,Energy
+VLO,Energy
+HAL,Energy
+NEE,Utilities
+DUK,Utilities
+SO,Utilities
+D,Utilities
+AEP,Utilities
+EXC,Utilities
+APD,Materials
+SHW,Materials
+ECL,Materials
+NEM,Materials
+FCX,Materials
+SPG,Real Estate
+PLD,Real Estate
+AMT,Real Estate
+EQR,Real Estate
+PSA,Real Estate

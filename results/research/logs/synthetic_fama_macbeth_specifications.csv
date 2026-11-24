@@ -1,0 +1,25 @@
+logged_at_utc,spec,xs,industry_controls,status,n_months,n_dropped_months
+2026-11-24T12:04:21+00:00,uni_value,"[""value""]",False,run,196,1
+2026-11-24T12:04:21+00:00,uni_value_ind,"[""value""]",True,run,196,1
+2026-11-24T12:04:22+00:00,uni_momentum,"[""momentum""]",False,run,184,13
+2026-11-24T12:04:22+00:00,uni_momentum_ind,"[""momentum""]",True,run,184,13
+2026-11-24T12:04:22+00:00,uni_low_vol,"[""low_vol""]",False,run,191,6
+2026-11-24T12:04:23+00:00,uni_low_vol_ind,"[""low_vol""]",True,run,191,6
+2026-11-24T12:04:23+00:00,uni_quality,"[""quality""]",False,run,196,1
+2026-11-24T12:04:24+00:00,uni_quality_ind,"[""quality""]",True,run,196,1
+2026-11-24T12:04:24+00:00,multi,"[""value"", ""momentum"", ""low_vol"", ""quality""]",False,run,184,13
+2026-11-24T12:04:25+00:00,multi_ind,"[""value"", ""momentum"", ""low_vol"", ""quality""]",True,run,184,13
+2026-11-24T12:04:25+00:00,multi_size,"[""value"", ""momentum"", ""low_vol"", ""quality"", ""size""]",False,run,184,13
+2026-11-24T12:04:25+00:00,multi_size_ind,"[""value"", ""momentum"", ""low_vol"", ""quality"", ""size""]",True,run,184,13
+2026-11-24T12:32:21+00:00,uni_value,"[""value""]",False,run,196,1
+2026-11-24T12:32:22+00:00,uni_value_ind,"[""value""]",True,run,196,1
+2026-11-24T12:32:22+00:00,uni_momentum,"[""momentum""]",False,run,184,13
+2026-11-24T12:32:22+00:00,uni_momentum_ind,"[""momentum""]",True,run,184,13
+2026-11-24T12:32:23+00:00,uni_low_vol,"[""low_vol""]",False,run,191,6
+2026-11-24T12:32:23+00:00,uni_low_vol_ind,"[""low_vol""]",True,run,191,6
+2026-11-24T12:32:23+00:00,uni_quality,"[""quality""]",False,run,196,1
+2026-11-24T12:32:24+00:00,uni_quality_ind,"[""quality""]",True,run,196,1
+2026-11-24T12:32:24+00:00,multi,"[""value"", ""momentum"", ""low_vol"", ""quality""]",False,run,184,13
+2026-11-24T12:32:25+00:00,multi_ind,"[""value"", ""momentum"", ""low_vol"", ""quality""]",True,run,184,13
+2026-11-24T12:32:25+00:00,multi_size,"[""value"", ""momentum"", ""low_vol"", ""quality"", ""size""]",False,run,184,13
+2026-11-24T12:32:26+00:00,multi_size_ind,"[""value"", ""momentum"", ""low_vol"", ""quality"", ""size""]",True,run,184,13

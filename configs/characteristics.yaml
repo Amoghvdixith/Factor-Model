@@ -1,0 +1,34 @@
+momentum:
+  lookback_months: 12   # return from end of month t-12 ...
+  skip_months: 1        # ... to end of month t-1 (month t skipped)
+  min_months: 12        # all 11 component monthly returns must exist
+low_vol:
+  lookback_days: 252
+  min_obs: 126
+value:
+  measure: book_to_market    # or earnings_yield
+quality:
+  components: [roe, gpa, neg_leverage]
+  min_components: 2
+processing:
+  winsor_lower: 0.01
+  winsor_upper: 0.99
+  min_cross_section: 20
+  sector_relative: false
+sorts:
+  n_groups: 5
+  min_stocks: 25
+composite_weights: {value: 1.0, momentum: 1.0, low_vol: 1.0, quality: 1.0}
+fama_macbeth:
+  specs:
+    uni_value: [value]
+    uni_momentum: [momentum]
+    uni_low_vol: [low_vol]
+    uni_quality: [quality]
+    multi: [value, momentum, low_vol, quality]
+    multi_size: [value, momentum, low_vol, quality, size]
+  industry_controls: [false, true]
+  hac_lags: auto
+  min_obs_per_month: 30
+  t_hurdle: 3.0   # illustrative literature-motivated hurdle (Harvey-Liu-Zhu), not a formal correction
+  return_convention: excess   # next-month return minus next-month risk-free rate

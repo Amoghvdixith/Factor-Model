@@ -1,0 +1,9 @@
+logged_at_utc,stage,split,te_annual,metric,value,n_months,n_fallbacks
+2026-11-24T12:04:35+00:00,te_selection,validation,0.02,IR of model-implied net active return vs EW,0.6934459611589003,47,0
+2026-11-24T12:04:37+00:00,te_selection,validation,0.04,IR of model-implied net active return vs EW,0.7859280873504391,47,0
+2026-11-24T12:04:39+00:00,te_selection,validation,0.06,IR of model-implied net active return vs EW,1.0275948116864688,47,0
+2026-11-24T12:04:39+00:00,selection,0.06,max validation IR; ties -> smaller TE; predeclared grid
+2026-11-24T12:32:35+00:00,te_selection,validation,0.02,IR of model-implied net active return vs EW,0.6934459611589003,47,0
+2026-11-24T12:32:37+00:00,te_selection,validation,0.04,IR of model-implied net active return vs EW,0.7859280873504391,47,0
+2026-11-24T12:32:39+00:00,te_selection,validation,0.06,IR of model-implied net active return vs EW,1.0275948116864688,47,0
+2026-11-24T12:32:39+00:00,selection,0.06,max validation IR; ties -> smaller TE; predeclared grid

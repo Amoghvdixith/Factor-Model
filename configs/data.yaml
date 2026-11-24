@@ -1,0 +1,43 @@
+# Data configuration.  All paths are relative to the project root.
+synthetic:
+  seed: 20240607
+  sizes:
+    fast:     {n_stocks: 120, n_years: 10, start: "2012-01-02"}
+    research: {n_stocks: 400, n_years: 20, start: "2002-01-01"}
+  n_industries: 8
+  delisting_prob_per_year: 0.01       # per-stock annual hazard of delisting
+  delisting_return_range: [-0.5, -0.1]
+  late_listing_fraction: 0.10         # fraction of stocks that list after the start
+  revision_prob: 0.15                 # fraction of fundamental records later restated
+  publication_lag_days: [60, 120]     # observed publication lag range (synthetic)
+  directory: data/synthetic
+
+french:
+  base_url: "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/"
+  region: US
+  frequency: monthly
+  files:
+    ff3: F-F_Research_Data_Factors_CSV.zip
+    ff5: F-F_Research_Data_5_Factors_2x3_CSV.zip
+    mom: F-F_Momentum_Factor_CSV.zip
+    p25: 25_Portfolios_5x5_CSV.zip
+  directory: data/french
+
+market:
+  directory: data/market
+  etfs:                    # style ETFs/funds (US-listed, USD) analysed against US French factors
+    SPY: "S&P 500 (market)"
+    IWD: "Russell 1000 Value"
+    IWN: "Russell 2000 Value"
+    MTUM: "MSCI USA Momentum"
+    QUAL: "MSCI USA Quality"
+    USMV: "MSCI USA Min Volatility"
+  etf_start: "2000-01-01"
+  stock_universe_file: configs/real_universe.csv
+  stock_start: "2010-01-01"
+
+splits:                     # fractions of the monthly calendar (in order)
+  train: 0.45
+  validation: 0.20
+  oos: 0.20
+  holdout: 0.15             # protected: never read by run_all.py
